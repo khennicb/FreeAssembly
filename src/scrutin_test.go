@@ -34,6 +34,7 @@ func TestCreateScrutin(t *testing.T) {
 	}`
 
 	expectedScrutin := Scrutin{
+		uid:       "VTANR5L15V1",
 		date:      "2017-07-04",
 		titre:     "la declaration de politique generale du Gouvernement de M. Edouard Philippe (application de l'article 49, alinea premier, de la Constitution).",
 		demandeur: "Conference des Presidents",
@@ -48,6 +49,10 @@ func TestCreateScrutin(t *testing.T) {
 	scrutin, err := CreateScrutin(inputmap)
 	if err != nil {
 		t.Errorf("Test failed. The function CreateScrutin returned an error")
+	}
+
+	if scrutin.uid != expectedScrutin.uid {
+		t.Errorf("Test failed on %+v. got %+v; wanted %+v", expectedScrutin, scrutin.uid, expectedScrutin.uid)
 	}
 
 	if scrutin.date != expectedScrutin.date {

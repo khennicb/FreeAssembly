@@ -6,6 +6,7 @@ import (
 )
 
 type Scrutin struct {
+	uid       string
 	date      string
 	titre     string
 	demandeur string
@@ -16,6 +17,13 @@ func CreateScrutin(scrutinMap map[string]interface{}) (Scrutin, error) {
 	scrutinMap = scrutinMap["scrutin"].(map[string]interface{})
 
 	scrutin := Scrutin{}
+
+	if reflect.ValueOf(scrutinMap["uid"]).Kind() == reflect.String {
+		scrutin.uid = scrutinMap["uid"].(string)
+	} else {
+		println("no value for date")
+		return Scrutin{}, errors.New("no value for date")
+	}
 
 	if reflect.ValueOf(scrutinMap["dateScrutin"]).Kind() == reflect.String {
 		scrutin.date = scrutinMap["dateScrutin"].(string)

@@ -44,6 +44,29 @@ func main() {
 	fmt.Printf("  titre: %s\n", scrutin.titre)
 	fmt.Printf("  demandeur: %s\n", scrutin.demandeur)
 
+	// Checking every single file to count the errors
+
+	errorCount := 0
+	for _, fileName := range fileNames {
+
+		mapScrutin, err := convertFileIntoMap(dataDirectory + "/" + fileName)
+		if err != nil {
+			fmt.Printf("could not convert the file %s\n", fileName)
+			return
+		}
+
+		s, err := CreateScrutin(mapScrutin)
+
+		fmt.Println(s.date)
+
+		if err != nil {
+			fmt.Printf("%v\n", err)
+			errorCount++
+		}
+	}
+
+	fmt.Printf("Error count : %d out of %d\n", errorCount, len(fileNames))
+
 }
 
 func getAllFilesInDir(dir string) ([]string, error) {

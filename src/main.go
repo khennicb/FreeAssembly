@@ -8,13 +8,15 @@ import (
 	"os"
 )
 
+var defaultDataDirectory = "data/"
+
 func main() {
 
 	dataDirectory := ""
 	nbArg := len(os.Args)
 	fmt.Printf("number of args : %d\n", nbArg)
 	if nbArg == 1 {
-		dataDirectory = "data/"
+		dataDirectory = defaultDataDirectory+"Scrutins_XV.json/json/"
 		fmt.Printf("no arg, looking into %s\n", dataDirectory)
 	} else if nbArg == 2 {
 		dataDirectory = os.Args[1]

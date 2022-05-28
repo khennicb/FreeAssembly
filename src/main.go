@@ -16,7 +16,7 @@ func main() {
 	nbArg := len(os.Args)
 	fmt.Printf("number of args : %d\n", nbArg)
 	if nbArg == 1 {
-		dataDirectory = defaultDataDirectory+"Scrutins_XV.json/json/"
+		dataDirectory = defaultDataDirectory + "Scrutins_XV.json/json/"
 		fmt.Printf("no arg, looking into %s\n", dataDirectory)
 	} else if nbArg == 2 {
 		dataDirectory = os.Args[1]
@@ -40,11 +40,7 @@ func main() {
 	}
 
 	scrutin, err := CreateScrutin(mapScrutin)
-
-	fmt.Printf("Scrutin details : \n")
-	fmt.Printf("  date: %s\n", scrutin.date)
-	fmt.Printf("  titre: %s\n", scrutin.titre)
-	fmt.Printf("  demandeur: %s\n", scrutin.demandeur)
+	scrutin.prettyPrint()
 
 	// Checking every single file to count the errors
 
@@ -57,12 +53,13 @@ func main() {
 			return
 		}
 
-		s, err := CreateScrutin(mapScrutin)
+		_, err = CreateScrutin(mapScrutin)
 
-		fmt.Println(s.date)
+		//fmt.Println(s.date)
 
 		if err != nil {
 			fmt.Printf("%v\n", err)
+			fmt.Printf("file : %s\n", fileName)
 			errorCount++
 		}
 	}

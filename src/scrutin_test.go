@@ -29,9 +29,29 @@ func TestCreateScrutin(t *testing.T) {
 		"titre": "la declaration de politique generale du Gouvernement de M. Edouard Philippe (application de l'article 49, alinea premier, de la Constitution).", 
 		"demandeur": 
 			{"texte": "Conference des Presidents", 
-			"referenceLegislative": null}
+			"referenceLegislative": null},
+	 	"ventilationVotes": {
+			"organe": {
+				"organeRef": "PO717460",
+				"groupes": {
+					"groupe": [{
+						"organeRef": "PO730964",
+						"nombreMembresGroupe": "314",
+						"vote": {
+							"positionMajoritaire": "pour",
+							"decompteVoix": {
+								"nonVotants": "8",
+								"pour": "305",
+								"contre": "0",
+								"abstentions": "0",
+								"nonVotantsVolontaires": "0"
+							}
+						}
+					}]
+				}
+			}
 		}
-	}`
+	}}`
 
 	expectedScrutin := Scrutin{
 		uid:       "VTANR5L15V1",
@@ -44,11 +64,13 @@ func TestCreateScrutin(t *testing.T) {
 	if err := json.Unmarshal([]byte(inputjson), &inputmap); err != nil {
 		fmt.Println("failed to unmarshal json")
 		t.Errorf("Test failed because of a failed unmarshal")
+		return
 	}
 
 	scrutin, err := CreateScrutin(inputmap)
 	if err != nil {
-		t.Errorf("Test failed. The function CreateScrutin returned an error")
+		t.Errorf("Test failed. The function CreateScrutin returned an error : %v", err)
+		return
 	}
 
 	if scrutin.uid != expectedScrutin.uid {
